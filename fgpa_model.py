@@ -134,17 +134,7 @@ class FGPADecoder(nn.Module):
             nn.BatchNorm2d(channels[3]),
             nn.GELU()
         )
-        
-        # Decoder 3
-        self.up3 = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
-        self.conv3 = nn.Sequential(
-            nn.Conv2d(channels[3] + channels[2], channels[2], 3, padding=1),
-            nn.BatchNorm2d(channels[2]),
-            nn.GELU(),
-            nn.Conv2d(channels[2], channels[2], 3, padding=1),
-            nn.BatchNorm2d(channels[2]),
-            nn.GELU()
-        )
+
         
         # Decoder 2
         self.up2 = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
@@ -186,36 +176,28 @@ class FGPADecoder(nn.Module):
             self.ds4 = nn.Conv2d(channels[3], num_classes, 1)
 
     def forward(self, features):
-        x1, x2, x3, x4, x5 = features
         
         d4 = self.up4(x5)
         x4 = self.ag4(g=d4, x=x4)
         d4 = torch.cat([d4, x4], dim=1)
         d4 = self.conv4(d4)
         
-        d3 = self.up3(d4)
-        x3 = self.ag3(g=d3, x=x3)
-        d3 = torch.cat([d3, x3], dim=1)
-        d3 = self.conv3(d3)
+        d1 = self.up1(d2)
+        x1 = self.ag1(g=d1, x=x1)
+        d1 = torch.cat([d1, x1], dim=1)
+        d1 = self.conv1(d1)
         
         d2 = self.up2(d3)
         x2 = self.ag2(g=d2, x=x2)
         d2 = torch.cat([d2, x2], dim=1)
         d2 = self.conv2(d2)
         
-        d1 = self.up1(d2)
-        x1 = self.ag1(g=d1, x=x1)
-        d1 = torch.cat([d1, x1], dim=1)
-        d1 = self.conv1(d1)
+
         
         out = self.final(d1)
         
         if self.deep_supervision and self.training:
             # Upsample intermediate outputs to target size (if needed by loss) or return as is.
-            # Usually deep supervision loss handles size, or we upsample here.
-            # Let's upsample here to be safe and consistent with typical segmentation losses.
-            out2 = F.interpolate(self.ds2(d2), size=out.shape[2:], mode='bilinear', align_corners=True)
-            out3 = F.interpolate(self.ds3(d3), size=out.shape[2:], mode='bilinear', align_corners=True)
             out4 = F.interpolate(self.ds4(d4), size=out.shape[2:], mode='bilinear', align_corners=True)
             return [out, out2, out3, out4]
             
@@ -225,29 +207,11 @@ class FGPAModel(nn.Module):
     def __init__(self, input_channel=3, num_classes=1, img_size=256, deep_supervision=False):
         super(FGPAModel, self).__init__()
         
-        self.channels = [16, 32, 64, 128, 256] # MK-UNet typical channels (scaled)
-        # Using [16, 32, 64, 128, 256] for consistency with typical medical imaging
-        
-        self.encoder = FGPAEncoder(input_channel, self.channels, img_size=img_size)
-        
-        # Prototype Attention at Bottleneck
-        # Input to bottleneck is x5 (channels[4] = 256)
-        self.prototype_att = PrototypeAttention(self.channels[4])
-        
         self.decoder = FGPADecoder(self.channels, num_classes, deep_supervision=deep_supervision)
 
     def forward(self, x):
         # Encoder
         features = self.encoder(x) # [x1, x2, x3, x4, x5]
-        x5 = features[-1]
-        
-        # Prototype Attention Fusion
-        # "Use 'clean' features" - here x5 is already coming from HDDI which has freq gating.
-        # So we can treat x5 as "clean enough" or we could apply another gating pass.
-        # Let's assume HDDI did the job.
-        x5_refined = self.prototype_att(x5)
-        
-        # Replace x5 with refined version
         features[-1] = x5_refined
         
         # Decoder
@@ -256,15 +220,10 @@ class FGPAModel(nn.Module):
         return out
 
 if __name__ == "__main__":
-    # Verification
-    input_tensor = torch.randn(1, 3, 256, 256)
-    model = FGPAModel()
     output = model(input_tensor)
     print(f"Input: {input_tensor.shape}")
     print(f"Output: {output.shape}")
     
-    # Parameter Count
-    total_params = sum(p.numel() for p in model.parameters())
     print(f"Total Parameters: {total_params} ({total_params/1e6:.2f} M)")
     
     trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
