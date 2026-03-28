@@ -17,6 +17,7 @@ Prototype-Guided Semantic Consistency (PGSC): A module that approximates long-ra
 Macro-Micro ROI Framework: A coarse-to-fine pipeline that geometrically normalizes inputs to improve cross-site robustness.
 
 **Requirements**
+
 Python 3.x
 
 PyTorch >= 1.10
@@ -28,13 +29,11 @@ Torchvision
 Numpy, OpenCV, Matplotlib
 
 **Datasets**
-Our model is evaluated on three diverse ultrasound datasets:
 
+Our model is evaluated on three diverse ultrasound datasets:
 
 BUSI (Breast): 647 images for training and internal validation.
 
-
 TN3K (Thyroid): 3,073 images for large-scale multi-organ benchmarking.
-
 
 UDIAT (Breast): Used for Zero-Shot cross-dataset generalization testing.
