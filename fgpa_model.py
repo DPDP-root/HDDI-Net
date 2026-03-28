@@ -37,17 +37,11 @@ class Attention_block(nn.Module):
         return x * psi
 
 class HDDIBlock(nn.Module):
-    """
-    Hierarchical Dual-Domain Interaction Block.
-    Combines Spatial (MK-Block) and Frequency (DCT-Gating) features.
-    """
     def __init__(self, in_channels, out_channels, stride=1, expansion_factor=2, dw_parallel=True, kernel_sizes=[3,5,7], frequency_selection='top', dct_size=(256, 256)):
         super(HDDIBlock, self).__init__()
         
-        # Spatial Stream: MK-Block
         self.spatial_block = mk_irb_bottleneck(in_channels, out_channels, 1, stride, expansion_factor, dw_parallel, True, kernel_sizes)
         
-        # Frequency Stream: Gating
         # Out = F_spatial + alpha * F_clean
         
         self.freq_gating = MultiFrequencyChannelAttention(
@@ -60,13 +54,10 @@ class HDDIBlock(nn.Module):
         self.alpha = nn.Parameter(torch.ones(1) * 0.1) # Learnable weight
 
     def forward(self, x):
-        # Spatial
         f_spatial = self.spatial_block(x)
         
-        # Frequency "Cleaning"
         f_clean = self.freq_gating(f_spatial)
         
-        # Interaction
         f_fused = f_spatial + self.alpha * f_clean
         
         return f_fused
@@ -75,8 +66,7 @@ class FGPAEncoder(nn.Module):
     def __init__(self, in_channels=3, channels=[16, 32, 64, 128, 256], img_size=256):
         super(FGPAEncoder, self).__init__()
         self.channels = channels
-        
-        # Calculate resolutions
+
         s1 = img_size
         s2 = s1 // 2
         s3 = s2 // 2
@@ -123,8 +113,7 @@ class FGPADecoder(nn.Module):
     def __init__(self, channels=[16, 32, 64, 128, 256], num_classes=1, deep_supervision=False):
         super(FGPADecoder, self).__init__()
         self.deep_supervision = deep_supervision
-        
-        # Decoder 4 (Input: x5 + x4)
+
         self.up4 = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
         self.conv4 = nn.Sequential(
             nn.Conv2d(channels[4] + channels[3], channels[3], 3, padding=1),
@@ -135,8 +124,6 @@ class FGPADecoder(nn.Module):
             nn.GELU()
         )
 
-        
-        # Decoder 2
         self.up2 = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
         self.conv2 = nn.Sequential(
             nn.Conv2d(channels[2] + channels[1], channels[1], 3, padding=1),
@@ -147,7 +134,6 @@ class FGPADecoder(nn.Module):
             nn.GELU()
         )
         
-        # Decoder 1
         self.up1 = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
         self.conv1 = nn.Sequential(
             nn.Conv2d(channels[1] + channels[0], channels[0], 3, padding=1),
@@ -160,10 +146,6 @@ class FGPADecoder(nn.Module):
         
         self.final = nn.Conv2d(channels[0], num_classes, 1)
 
-        # Attention Gates
-        # F_g (gating signal channels) comes from Decoder (upsampled)
-        # F_l (skip connection channels) comes from Encoder
-        # F_int (intermediate channels) usually F_l // 2
         self.ag4 = Attention_block(F_g=channels[4], F_l=channels[3], F_int=channels[3]//2)
         self.ag3 = Attention_block(F_g=channels[3], F_l=channels[2], F_int=channels[2]//2)
         self.ag2 = Attention_block(F_g=channels[2], F_l=channels[1], F_int=channels[1]//2)
