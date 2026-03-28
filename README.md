@@ -1,5 +1,5 @@
 #**HDDI-Net: Lightweight Dual-Domain Interaction for Robust Ultrasound Lesion Segmentation**
-+++
+
 
 This repository is the official implementation of the paper: "HDDI-Net: Lightweight Dual-Domain Interaction for Robust Ultrasound Lesion Segmentation".
 
