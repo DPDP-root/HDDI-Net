@@ -44,7 +44,6 @@ def _init_weights(module, name, scheme=''):
         nn.init.constant_(module.bias, 0)
 
 def act_layer(act, inplace=False, neg_slope=0.2, n_prelu=1):
-    # activation layer
     act = act.lower()
     if act == 'relu':
         layer = nn.ReLU(inplace)
@@ -66,7 +65,6 @@ def channel_shuffle(x, groups):
     batchsize, num_channels, height, width = x.data.size()
     channels_per_group = num_channels // groups
     
-    # reshape
     x = x.view(batchsize, groups, 
                channels_per_group, height, width)
     x = torch.transpose(x, 1, 2).contiguous()
@@ -83,8 +81,6 @@ class MultiKernelDepthwiseConv(nn.Module):
         self.dw_parallel = dw_parallel
         self.dwconvs = nn.ModuleList([
             nn.Sequential(
-                # Teahcer Feedback Check: usage of groups=in_channels confirms Depthwise Convolution.
-                # This ensures parameters are limited (K*K*C instead of K*K*C*C).
                 nn.Conv2d(self.in_channels, self.in_channels, kernel_size, stride, kernel_size // 2, groups=self.in_channels, bias=False),
                 nn.BatchNorm2d(self.in_channels),
                 act_layer(activation, inplace=True)
@@ -97,18 +93,11 @@ class MultiKernelDepthwiseConv(nn.Module):
         named_apply(partial(_init_weights, scheme=scheme), self)
 
     def forward(self, x):
-        # Apply the convolution layers in a loop
         outputs = []
         for dwconv in self.dwconvs:
             dw_out = dwconv(x)
             outputs.append(dw_out)
             if self.dw_parallel == False:
                 x = x+dw_out
-        # You can return outputs based on what you intend to do with them
-        # For example, you could concatenate or add them; here, we just return the list
         return outputs
 
-class MultiKernelInvertedResidualBlock(nn.Module):
-    """
-    inverted residual block used in MobileNetV2
-    """s
