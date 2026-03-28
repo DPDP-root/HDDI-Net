@@ -1,9 +1,8 @@
 #**HDDI-Net: Lightweight Dual-Domain Interaction for Robust Ultrasound Lesion Segmentation**
 
-
 This repository is the official implementation of the paper: "HDDI-Net: Lightweight Dual-Domain Interaction for Robust Ultrasound Lesion Segmentation".
 
-📌 Introduction
+**Introduction**
 
 HDDI-Net is a lightweight, noise-aware segmentation network designed for B-mode ultrasound. It addresses the challenges of speckle interference and ambiguous margins by integrating spatial and frequency-domain reasoning within a mobile-scale computational budget (~1.7M parameters).
 
@@ -17,10 +16,7 @@ Prototype-Guided Semantic Consistency (PGSC): A module that approximates long-ra
 
 Macro-Micro ROI Framework: A coarse-to-fine pipeline that geometrically normalizes inputs to improve cross-site robustness.
 
-🛠️ Environment and Installation
-The code is implemented using PyTorch and was tested on an NVIDIA RTX 4090 GPU.
-
-Requirements
+**Requirements**
 Python 3.x
 
 PyTorch >= 1.10
@@ -31,7 +27,7 @@ Torchvision
 
 Numpy, OpenCV, Matplotlib
 
-📊 Datasets
+**Datasets**
 Our model is evaluated on three diverse ultrasound datasets:
 
 
