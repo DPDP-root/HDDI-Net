@@ -160,21 +160,6 @@ python main.py --gpu 0 --batch_size 8 \
 
 ---
 
-## 📑 Citation
-
-If you find our work useful for your research, please cite:
-
-```bibtex
-@misc{hddinet2026,
-      title={Lightweight yet Robust: Frequency-Gated Interaction Network for Generalized Ultrasound Lesion Segmentation},
-      author={Author Names},
-      year={2026},
-      eprint={TODO},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
-}
-```
-
 ---
 
 ## 📝 Related Projects
