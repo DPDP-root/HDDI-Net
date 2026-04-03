@@ -1,5 +1,5 @@
 <p align="center" width="100%">
-<a target="_blank"><img src="HDDI/imgs/figure1.1.pdf" alt="HDDI-Net Architecture" style="width: 90%; min-width: 200px; display: block; margin: auto;"></a>
+<a target="_blank"><img src="HDDI/imgs/figure1.1.png" alt="HDDI-Net Architecture" style="width: 90%; min-width: 200px; display: block; margin: auto;"></a>
 </p>
 
 <!-- 📌 请将您的网络架构图命名为 architecture.png 并放到 imgs/ 文件夹中 -->
