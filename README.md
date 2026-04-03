@@ -1,6 +1,8 @@
 <p align="center" width="100%">
-<a target="_blank"><img src="imgs/teaser2.jpg" alt="HDDI-Net" style="width: 90%; min-width: 200px; display: block; margin: auto;"></a>
+<a target="_blank"><img src="HDDI/imgs/figure1.1.pdf" alt="HDDI-Net Architecture" style="width: 90%; min-width: 200px; display: block; margin: auto;"></a>
 </p>
+
+<!-- 📌 请将您的网络架构图命名为 architecture.png 并放到 imgs/ 文件夹中 -->
 
 # HDDI-Net: Lightweight yet Robust Frequency-Gated Interaction Network for Generalized Ultrasound Lesion Segmentation
 
@@ -8,8 +10,8 @@ This is the official repository for **HDDI-Net**, an extremely lightweight (**1.
 
 <div style='display:flex; gap: 0.25rem; '>
 <a href='LICENSE'><img src='https://img.shields.io/badge/License-Apache_2.0-blue.svg'></a>
-<a href='#'><img src='https://img.shields.io/badge/Paper-MICCAI%2FPRCV-red'></a>
-<a href='#'><img src='https://img.shields.io/badge/arXiv-TODO-b31b1b'></a>
+<a href='#'><img src='https://img.shields.io/badge/Journal-The%20Visual%20Computer-orange'></a>
+<a href='#'><img src='https://img.shields.io/badge/Status-Under%20Review-yellow'></a>
 </div>
 
 ---
