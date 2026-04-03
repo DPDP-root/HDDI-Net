@@ -8,12 +8,11 @@ This is the official repository for **HDDI-Net**, an extremely lightweight (**1.
 
 <div style='display:flex; gap: 0.25rem; '>
 <a href='LICENSE'><img src='https://img.shields.io/badge/License-Apache_2.0-blue.svg'></a>
-<a href='#'><img src='https://img.shields.io/badge/Journal-The%20Visual%20Computer-orange'></a>
 <a href='#'><img src='https://img.shields.io/badge/Status-Under%20Review-yellow'></a>
 </div>
 
 <p align="center" width="100%">
-<a target="_blank"><img src="imgs/architecture.png" alt="HDDI-Net Architecture" style="width: 90%; min-width: 200px; display: block; margin: auto;"></a>
+<a target="_blank"><img src="HDDI/imgs/figure1.1.png" alt="HDDI-Net Architecture" style="width: 90%; min-width: 200px; display: block; margin: auto;"></a>
 </p>
 ---
 
@@ -113,7 +112,7 @@ python main.py --gpu 0 --batch_size 8 \
 ## 🏅 Experiments
 
 <p align="center" width="100%">
-<a target="_blank"><img src="imgs/bubble_chart_average.png" alt="HDDI-Net Efficiency vs Accuracy" style="width: 80%; min-width: 200px; display: block; margin: auto;"></a>
+<a target="_blank"><img src="HDDI/imgs/figure3.png" alt="HDDI-Net Efficiency vs Accuracy" style="width: 80%; min-width: 200px; display: block; margin: auto;"></a>
 </p> 
 
 ### Internal Validation — BUSI Dataset
