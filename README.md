@@ -1,10 +1,8 @@
-<p align="center" width="100%">
-<a target="_blank"><img src="imgs/architecture.png" alt="HDDI-Net Architecture" style="width: 90%; min-width: 200px; display: block; margin: auto;"></a>
-</p>
+
 
 <!-- 📌 请将您的网络架构图命名为 architecture.png 并放到 imgs/ 文件夹中 -->
 
-# HDDI-Net: Lightweight yet Robust Frequency-Gated Interaction Network for Generalized Ultrasound Lesion Segmentation
+# # HDDI-Net: Hierarchical Dual-Domain Interaction Network for Robust and Efficient Ultrasound Lesion Segmentation
 
 This is the official repository for **HDDI-Net**, an extremely lightweight (**1.71M parameters**, ~95% fewer than TransUnet) and efficient deep learning framework for robust breast ultrasound lesion segmentation. HDDI-Net combines a **Hierarchical Dual-Domain Interaction (HDDI) Block** for simultaneous spatial texture capture and frequency-domain speckle noise removal, with a **Coarse-to-Fine ROI-aware Framework** to suppress complex background interference.
 
@@ -14,6 +12,9 @@ This is the official repository for **HDDI-Net**, an extremely lightweight (**1.
 <a href='#'><img src='https://img.shields.io/badge/Status-Under%20Review-yellow'></a>
 </div>
 
+<p align="center" width="100%">
+<a target="_blank"><img src="imgs/HDDI/figure1.png" alt="HDDI-Net Architecture" style="width: 90%; min-width: 200px; display: block; margin: auto;"></a>
+</p>
 ---
 
 ## 🔥 Updates
