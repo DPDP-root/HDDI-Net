@@ -8,7 +8,6 @@ This is the official repository for **HDDI-Net**, an extremely lightweight (**1.
 
 <div style='display:flex; gap: 0.25rem; '>
 <a href='LICENSE'><img src='https://img.shields.io/badge/License-Apache_2.0-blue.svg'></a>
-<a href='#'><img src='https://img.shields.io/badge/Journal-The%20Visual%20Computer-orange'></a>
 <a href='#'><img src='https://img.shields.io/badge/Status-Under%20Review-yellow'></a>
 </div>
 
