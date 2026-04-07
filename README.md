@@ -86,7 +86,7 @@ run_train.bat
 
 ```bash
 conda activate hddinet
-python main.py --max_epochs 100 --gpu 0 --batch_size 8 \
+python main.py --max_epochs 150 --gpu 0 --batch_size 8 \
                --model HDDI_Net \
                --base_dir ./data/busi \
                --dataset_name busi \
@@ -161,23 +161,6 @@ python main.py --gpu 0 --batch_size 8 \
 | w/o Spatial Path | 72.79 | 80.62 |
 | w/o Prototype Module | 72.67 | 80.70 |
 | w/o ROI Framework | 70.42 | 78.30 |
-
----
-
-## 📑 Citation
-
-If you find our work useful for your research, please cite:
-
-```bibtex
-@misc{hddinet2026,
-      title={Lightweight yet Robust: Frequency-Gated Interaction Network for Generalized Ultrasound Lesion Segmentation},
-      author={Author Names},
-      year={2026},
-      eprint={TODO},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
-}
-```
 
 ---
 
