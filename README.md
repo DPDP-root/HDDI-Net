@@ -1,19 +1,19 @@
-
+<p align="center" width="100%">
+<a target="_blank"><img src="imgs/architecture.png" alt="HDDI-Net Architecture" style="width: 90%; min-width: 200px; display: block; margin: auto;"></a>
+</p>
 
 <!-- 📌 请将您的网络架构图命名为 architecture.png 并放到 imgs/ 文件夹中 -->
 
-# HDDI-Net: Hierarchical Dual-Domain Interaction Network for Robust and Efficient Ultrasound Lesion Segmentation
+# HDDI-Net: Lightweight yet Robust Frequency-Gated Interaction Network for Generalized Ultrasound Lesion Segmentation
 
 This is the official repository for **HDDI-Net**, an extremely lightweight (**1.71M parameters**, ~95% fewer than TransUnet) and efficient deep learning framework for robust breast ultrasound lesion segmentation. HDDI-Net combines a **Hierarchical Dual-Domain Interaction (HDDI) Block** for simultaneous spatial texture capture and frequency-domain speckle noise removal, with a **Coarse-to-Fine ROI-aware Framework** to suppress complex background interference.
 
 <div style='display:flex; gap: 0.25rem; '>
 <a href='LICENSE'><img src='https://img.shields.io/badge/License-Apache_2.0-blue.svg'></a>
+<a href='#'><img src='https://img.shields.io/badge/Journal-The%20Visual%20Computer-orange'></a>
 <a href='#'><img src='https://img.shields.io/badge/Status-Under%20Review-yellow'></a>
 </div>
 
-<p align="center" width="100%">
-<a target="_blank"><img src="HDDI/imgs/figure1.1.png" alt="HDDI-Net Architecture" style="width: 90%; min-width: 200px; display: block; margin: auto;"></a>
-</p>
 ---
 
 ## 🔥 Updates
@@ -112,7 +112,7 @@ python main.py --gpu 0 --batch_size 8 \
 ## 🏅 Experiments
 
 <p align="center" width="100%">
-<a target="_blank"><img src="HDDI/imgs/figure3.png" alt="HDDI-Net Efficiency vs Accuracy" style="width: 80%; min-width: 200px; display: block; margin: auto;"></a>
+<a target="_blank"><img src="imgs/bubble_chart_average.png" alt="HDDI-Net Efficiency vs Accuracy" style="width: 80%; min-width: 200px; display: block; margin: auto;"></a>
 </p> 
 
 ### Internal Validation — BUSI Dataset
@@ -123,10 +123,10 @@ python main.py --gpu 0 --batch_size 8 \
 | SwinUnet | 41.34 | 8.693 | 75.19 | 87.59 | 88.87 |
 | AttU_Net | 34.88 | 51.015 | 74.06 | 74.52 | 75.91 |
 | U-Net | 34.53 | 50.166 | 74.28 | 72.77 | 74.15 |
-| TinyUnet | 0.48 | **1.270** | 66.24 | 65.46 | 66.88 |
+| TinyUnet | <u>0.48</u> | <u>1.270</u> | 66.24 | 65.46 | 66.88 |
 | Medformer | 28.073 | 16.878 | 62.93 | 75.78 | 75.37 |
 | EMCAD | 26.764 | 4.280 | 63.93 | 82.14 | 82.66 |
-| EgeUnet | **0.045** | 55.201 | 55.23 | 64.88 | 64.18 |
+| EgeUnet | **0.045** | **0.055** | 55.23 | 64.88 | 64.18 |
 | MobileNetV2_UNet | 0.922 | 2.003 | 60.30 | 68.15 | 69.04 |
 | **HDDI-Net (Ours)** | 1.71 | 3.300 | <u>77.09</u> | <u>87.74</u> | <u>89.61</u> |
 
@@ -140,10 +140,10 @@ python main.py --gpu 0 --batch_size 8 \
 | SwinUnet | 41.34 | 8.693 | 70.90 | 80.58 | 80.41 |
 | AttU_Net | 34.88 | 51.015 | 68.20 | 70.28 | 73.74 |
 | U-Net | 34.53 | 50.166 | 67.99 | 69.90 | 71.53 |
-| TinyUnet | 0.48 | **1.270** | 65.66 | 43.19 | 41.68 |
+| TinyUnet | <u>0.48</u> | <u>1.270</u> | 65.66 | 43.19 | 41.68 |
 | Medformer | 28.073 | 16.878 | 60.15 | 62.32 | 63.08 |
 | EMCAD | 26.764 | 4.280 | 62.86 | 74.75 | 73.43 |
-| EgeUnet | **0.045** | 55.201 | 58.84 | 41.32 | 38.67 |
+| EgeUnet | **0.045** | **0.055** | 58.84 | 41.32 | 38.67 |
 | MobileNetV2_UNet | 0.922 | 2.003 | 65.34 | 48.68 | 47.93 |
 | **HDDI-Net (Ours)** | 1.71 | 3.300 | <u>79.85</u> | <u>89.77</u> | <u>91.76</u> |
 
@@ -151,14 +151,32 @@ python main.py --gpu 0 --batch_size 8 \
 
 ### Ablation Study — BUSI Dataset
 
-| Model Variant                         | IoU ↑  | F1 ↑   | ΔIoU  |
-|:--------------------------------------|:------:|:------:|:-----:|
-| **Full Model (HDDI-Net)**             | **0.6709** | **0.8774** | —  |
-| w/o Deep Supervision (No DS)          | 0.6421 | 0.7962 | ↓2.8% |
-| w/o Frequency Gating (No Freq)        | 0.6370 | 0.8074 | ↓3.3% |
-| w/o Attention Gate (No AG)            | 0.6267 | 0.7970 | ↓4.3% |
+*Note: "w/o Spatial Path" implies the network degrades to a vanilla MobileNetV2-based U-Net with single-kernel convolutions.*
+
+| Method | IoU (%) ↑ | Dice (%) ↑ |
+|:---|:---:|:---:|
+| **HDDI-Net (Full)** | **77.09** | **87.74** |
+| w/o Frequency Path | 73.70 | 83.73 |
+| w/o Spatial Path | 72.79 | 80.62 |
+| w/o Prototype Module | 72.67 | 80.70 |
+| w/o ROI Framework | 70.42 | 78.30 |
 
 ---
+
+## 📑 Citation
+
+If you find our work useful for your research, please cite:
+
+```bibtex
+@misc{hddinet2026,
+      title={Lightweight yet Robust: Frequency-Gated Interaction Network for Generalized Ultrasound Lesion Segmentation},
+      author={Author Names},
+      year={2026},
+      eprint={TODO},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+```
 
 ---
 
