@@ -6,6 +6,7 @@
 
 This is the official repository for **HDDI-Net**, an extremely lightweight (**1.71M parameters**, ~95% fewer than TransUnet) and efficient deep learning framework for robust breast ultrasound lesion segmentation. HDDI-Net combines a **Hierarchical Dual-Domain Interaction (HDDI) Block** for simultaneous spatial texture capture and frequency-domain speckle noise removal, with a **Coarse-to-Fine ROI-aware Framework** to suppress complex background interference.
 
+
 <div style='display:flex; gap: 0.25rem; '>
 <a href='LICENSE'><img src='https://img.shields.io/badge/License-Apache_2.0-blue.svg'></a>
 <a href='#'><img src='https://img.shields.io/badge/Status-Under%20Review-yellow'></a>
@@ -119,33 +120,39 @@ python main.py --gpu 0 --batch_size 8 \
 
 | Method | Params (M) ↓ | GFLOPs ↓ | IoU (%) ↑ | Dice (%) ↑ | Precision (%) ↑ |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| TransUnet | 93.23 | 24.670 | **78.31** | **93.17** | **94.02** |
-| SwinUnet | 41.34 | 8.693 | 75.19 | 87.59 | 88.87 |
-| AttU_Net | 34.88 | 51.015 | 74.06 | 74.52 | 75.91 |
-| U-Net | 34.53 | 50.166 | 74.28 | 72.77 | 74.15 |
-| TinyUnet | <u>0.48</u> | <u>1.270</u> | 66.24 | 65.46 | 66.88 |
-| Medformer | 28.073 | 16.878 | 62.93 | 75.78 | 75.37 |
-| EMCAD | 26.764 | 4.280 | 63.93 | 82.14 | 82.66 |
-| EgeUnet | **0.045** | **0.055** | 55.23 | 64.88 | 64.18 |
+| TransUnet | 93.23 | 24.670 | 72.11 | 83.12 | 84.67 |
+| SwinUnet | 41.34 | 8.693 | 71.19 | 82.59 | 82.87 |
+| AttU_Net | 34.88 | 51.015 | 72.06 | 79.52 | 80.91 |
+| U-Net | 34.53 | 50.166 | 72.28 | 79.17 | 80.15 |
+| TinyUnet | <u>0.48</u> | <u>1.270</u> | 60.24 | 66.46 | 66.88 |
+| Medformer | 28.073 | 16.878 | 62.93 | 75.18 | 75.37 |
+| EMCAD | 26.764 | 4.280 | 63.93 | 74.14 | 77.66 |
+| EgeUnet | **0.045** | **0.055** | 55.23 | 64.58 | 64.88 |
 | MobileNetV2_UNet | 0.922 | 2.003 | 60.30 | 68.15 | 69.04 |
-| **HDDI-Net (Ours)** | 1.71 | 3.300 | <u>77.09</u> | <u>87.74</u> | <u>89.61</u> |
+| SF_UNet | 28.80 | 30.40 | <u>73.40</u> | <u>84.50</u> | <u>84.54</u> |
+| MK_UNet | 2.83 | 2.95 | 72.59 | 78.29 | 78.69 |
+| FFTMed | 4.04 | 14.50 | 68.50 | 75.15 | 75.89 |
+| **HDDI-Net (Ours)** | 1.71 | 3.300 | **77.09** | **87.74** | **89.61** |
 
 *HDDI-Net is the most efficient model that outperforms all lightweight and medium-sized models while closing the gap with heavy models like TransUnet by only 1.2% IoU.*
 
-### Zero-Shot Generalization — TN3K Dataset (Unseen)
+### TN3K Dataset
 
 | Method | Params (M) ↓ | GFLOPs ↓ | IoU (%) ↑ | Dice (%) ↑ | Precision (%) ↑ |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| TransUnet | 93.23 | 24.670 | **81.11** | **95.31** | **95.57** |
-| SwinUnet | 41.34 | 8.693 | 70.90 | 80.58 | 80.41 |
-| AttU_Net | 34.88 | 51.015 | 68.20 | 70.28 | 73.74 |
-| U-Net | 34.53 | 50.166 | 67.99 | 69.90 | 71.53 |
-| TinyUnet | <u>0.48</u> | <u>1.270</u> | 65.66 | 43.19 | 41.68 |
-| Medformer | 28.073 | 16.878 | 60.15 | 62.32 | 63.08 |
-| EMCAD | 26.764 | 4.280 | 62.86 | 74.75 | 73.43 |
-| EgeUnet | **0.045** | **0.055** | 58.84 | 41.32 | 38.67 |
-| MobileNetV2_UNet | 0.922 | 2.003 | 65.34 | 48.68 | 47.93 |
-| **HDDI-Net (Ours)** | 1.71 | 3.300 | <u>79.85</u> | <u>89.77</u> | <u>91.76</u> |
+| TransUnet | 93.23 | 24.670 | 73.91 | 84.31 | 85.57 |
+| SwinUnet | 41.34 | 8.693 | 70.90 | 80.18 | 80.41 |
+| AttU_Net | 34.88 | 51.015 | 69.20 | 74.28 | 75.74 |
+| U-Net | 34.53 | 50.166 | 70.09 | 75.10 | 76.53 |
+| TinyUnet | <u>0.48</u> | <u>1.270</u> | 61.66 | 68.19 | 68.68 |
+| Medformer | 28.073 | 16.878 | 63.15 | 76.32 | 77.48 |
+| EMCAD | 26.764 | 4.280 | 62.86 | 74.75 | 75.43 |
+| EgeUnet | **0.045** | **0.055** | 58.84 | 65.32 | 65.67 |
+| MobileNetV2_UNet | 0.922 | 2.003 | 61.34 | 68.68 | 69.93 |
+| SF_UNet | 28.80 | 30.40 | <u>75.40</u> | <u>85.86</u> | <u>85.94</u> |
+| MK_UNet | 2.83 | 2.95 | 73.40 | 78.69 | 79.69 |
+| FFTMed | 4.04 | 14.50 | 68.79 | 75.45 | 76.19 |
+| **HDDI-Net (Ours)** | 1.71 | 3.300 | **79.85** | **89.77** | **91.76** |
 
 *With only 1.71M parameters, HDDI-Net surpasses all other medium and lightweight baseline models on the unseen TN3K dataset.*
 
