@@ -134,7 +134,6 @@ python main.py --gpu 0 --batch_size 8 \
 | FFTMed | 4.04 | 14.50 | 68.50 | 75.15 | 75.89 |
 | **HDDI-Net (Ours)** | 1.71 | 3.300 | **77.09** | **87.74** | **89.61** |
 
-*HDDI-Net is the most efficient model that outperforms all lightweight and medium-sized models while closing the gap with heavy models like TransUnet by only 1.2% IoU.*
 
 ### TN3K Dataset
 
@@ -153,8 +152,6 @@ python main.py --gpu 0 --batch_size 8 \
 | MK_UNet | 2.83 | 2.95 | 73.40 | 78.69 | 79.69 |
 | FFTMed | 4.04 | 14.50 | 68.79 | 75.45 | 76.19 |
 | **HDDI-Net (Ours)** | 1.71 | 3.300 | **79.85** | **89.77** | **91.76** |
-
-*With only 1.71M parameters, HDDI-Net surpasses all other medium and lightweight baseline models on the unseen TN3K dataset.*
 
 ### Ablation Study — BUSI Dataset
 
